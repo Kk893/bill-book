@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Jain Hotel Invoice</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
+    .font-jain-text {
+      font-family: 'Roboto', sans-serif;
+    }
+    [contenteditable]:focus {
+      outline: 2px dashed black;
+      background-color: #fff8dc;
+    }
+    @media print {
+      body {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        background-color: #facc15 !important;
+      }
+      .bg-yellow-400 {
+        background-color: #facc15 !important;
+      }
+      .border-black {
+        border-color: black !important;
+      }
+      .border-2 {
+        border-width: 2px !important;
+      }
+      .border-b-2 {
+        border-bottom-width: 2px !important;
+      }
+      .border-r-2 {
+        border-right-width: 2px !important;
+      }
+      .border-l-2 {
+        border-left-width: 2px !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-yellow-400 flex flex-col items-center min-h-screen p-4">
+
+  <!-- Buttons -->
+  <div class="flex space-x-4 mb-4 no-print">
+    <button onclick="window.print()" class="bg-black text-white px-6 py-2 rounded-lg shadow-md hover:bg-gray-800 transition">
+      <i class="fas fa-print mr-2"></i>Print Invoice
+    </button>
+    <button onclick="downloadDoc()" class="bg-green-600 text-white px-6 py-2 rounded-lg shadow-md hover:bg-green-700 transition">
+      <i class="fas fa-download mr-2"></i>Download as Word
+    </button>
+  </div>
+
+  <!-- Invoice -->
+  <div class="w-full max-w-[600px] border-2 border-black bg-yellow-400">
+    <!-- Header -->
+    <div class="border-b-2 border-black p-4 relative">
+      <div class="flex justify-between items-start">
+        <div></div>
+        <div class="text-right font-jain-text">
+          <p class="text-[1rem] font-bold" contenteditable="true">Mo. 9694685465, 8949497354</p>
+        </div>
+      </div>
+      <h1 class="font-jain-text font-extrabold text-[3.5rem] leading-none mt-[-0.5rem] mb-1 select-none" contenteditable="true">Jain Hotel</h1>
+      <p class="font-jain-text font-extrabold text-[1.25rem] select-none" contenteditable="true">NH 25, Jodhpur Road, Kalyanpur (Balotra)</p>
+    </div>
+
+    <!-- Customer Info -->
+    <div class="flex border-b-2 border-black text-black font-jain-text font-extrabold text-[1.1rem]">
+      <div class="flex-1 border-r-2 border-black p-3">
+        <div class="mb-3">
+          <span contenteditable="true">M/s ___________________________</span>
+        </div>
+        <div>
+          <span contenteditable="true">Address ________________________</span>
+        </div>
+      </div>
+      <div class="w-[180px] p-3 border-l-2 border-black">
+        <div class="mb-3">
+          <span contenteditable="true">Bill No. _________</span>
+        </div>
+        <div>
+          <span contenteditable="true">Date ____________</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Table Header -->
+    <div class="flex border-b-2 border-black font-jain-text font-extrabold text-[1.1rem] text-black">
+      <div class="w-[60px] border-r-2 border-black p-2 text-center">S.No.</div>
+      <div class="flex-1 border-r-2 border-black p-2">PARTICULARS</div>
+      <div class="w-[70px] border-r-2 border-black p-2 text-center">QTY.</div>
+      <div class="w-[70px] border-r-2 border-black p-2 text-center">RATE</div>
+      <div class="w-[100px] p-2 text-center">AMOUNT</div>
+    </div>
+
+    <!-- Table Body -->
+    <div class="flex border-b-2 border-black min-h-[300px] text-[1rem]">
+      <div class="w-[60px] border-r-2 border-black p-2 text-center" contenteditable="true"></div>
+      <div class="flex-1 border-r-2 border-black p-2" contenteditable="true"></div>
+      <div class="w-[70px] border-r-2 border-black p-2 text-center" contenteditable="true"></div>
+      <div class="w-[70px] border-r-2 border-black p-2 text-center" contenteditable="true"></div>
+      <div class="w-[100px] p-2 text-center" contenteditable="true"></div>
+    </div>
+
+    <!-- Table Footer -->
+    <div class="flex border-b-2 border-black font-jain-text font-extrabold text-[1.1rem] text-black">
+      <div class="flex-1 border-r-2 border-black p-2"></div>
+      <div class="w-[70px] border-r-2 border-black p-2 text-center">TOTAL</div>
+      <div class="w-[100px] p-2 text-center" contenteditable="true"></div>
+    </div>
+
+    <!-- Footer -->
+    <div class="p-4 flex justify-end font-jain-text font-extrabold text-[1.25rem] text-black select-none">
+      <span contenteditable="true">For - Jain Hotel</span>
+    </div>
+  </div>
+
+  <!-- Word Download Script -->
+  <script>
+    function downloadDoc() {
+      const header = "<html xmlns:o='urn:schemas-microsoft-com:office:office' " +
+        "xmlns:w='urn:schemas-microsoft-com:office:word' " +
+        "xmlns='http://www.w3.org/TR/REC-html40'>" +
+        "<head><meta charset='utf-8'><title>Invoice</title></head><body>";
+      const footer = "</body></html>";
+      const content = document.querySelector('body').innerHTML;
+
+      const cleaned = content.replace(/<div class="flex space-x-4 mb-4 no-print">.*?<\/div>/s, '');
+
+      const sourceHTML = header + cleaned + footer;
+      const source = 'data:application/msword;charset=utf-8,' + encodeURIComponent(sourceHTML);
+
+      const fileDownload = document.createElement("a");
+      document.body.appendChild(fileDownload);
+      fileDownload.href = source;
+      fileDownload.download = 'invoice.doc';
+      fileDownload.click();
+      document.body.removeChild(fileDownload);
+    }
+  </script>
+</body>
+</html>
